@@ -17,19 +17,13 @@ const isVarnishPresent = ({ headers = [] } = {}) =>
     headers.some(({ name }) => ['x-varnish', 'x-cache'].includes(name));
 
 const varnishStatus = ({ headers = [] } = {}) => {
-    const hitMissHeader = headers
-        .reverse()
-        .find(({ name }) => name === 'x-cache');
-
-    if (hitMissHeader) {
-        return hitMissHeader.value.toLowerCase();
-    }
-
     const varnishHeaders = headers.filter(({ name }) => name === 'x-cache');
-
+    console.log('varnishHeadesr');
+    console.log(varnishHeaders);
     if (varnishHeaders.length) {
         return varnishHeaders.some((header) => {
-            return header.value.split(' ').length >= 2;
+            console.log(header.value);
+            return header.value.includes('hit');
         })
             ? 'hit'
             : 'miss';
