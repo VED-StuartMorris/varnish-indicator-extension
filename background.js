@@ -14,18 +14,18 @@ const buttonStatus = {
 };
 
 const isVarnishPresent = ({ headers = [] } = {}) =>
-    headers.some(({ name }) => ['x-varnish', 'x-varnish-cache'].includes(name));
+    headers.some(({ name }) => ['x-varnish', 'x-cache'].includes(name));
 
 const varnishStatus = ({ headers = [] } = {}) => {
     const hitMissHeader = headers
         .reverse()
-        .find(({ name }) => name === 'x-varnish-cache');
+        .find(({ name }) => name === 'x-cache');
 
     if (hitMissHeader) {
         return hitMissHeader.value.toLowerCase();
     }
 
-    const varnishHeaders = headers.filter(({ name }) => name === 'x-varnish');
+    const varnishHeaders = headers.filter(({ name }) => name === 'x-cache');
 
     if (varnishHeaders.length) {
         return varnishHeaders.some((header) => {
